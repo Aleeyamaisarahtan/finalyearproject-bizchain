@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;   /* horizontally center */
+    align-items: center;       /* vertically center */
+    height: 100vh;             /* full viewport height */
+    margin: 0;                 /* remove default margin */
+}
+
+/* Style the login container */
+.login-container {
+    background-color: white;
+    padding: 30px 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Style input fields */
+</style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bizchain Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login to Bizchain</h1>
+        <form method="post" action="">
+            <label>Username:</label><br>
+            <input type="text" name="username" required><br><br>
+
+            <label>Password:</label><br>
+            <input type="password" name="password" required><br><br>
+
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</body>
+</html>
