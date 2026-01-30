@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Register Business Company</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+}
+
+.register-container {
+    background-color: #fff;
+    width: 600px;
+    margin: 60px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+.register-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    font-size: 18px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+input[type="file"] {
+    padding: 6px;
+}
+
+/* Submit button */
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/*Checkbox for consent*/
+input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.note {
+    font-size: 13px;
+    color: #666;
+    margin-top: 15px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .register-container {
+        width: 90%;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="register-container">
+    <h2>Register Business Company</h2>
+
+    <form action="#" method="post" enctype="multipart/form-data">
+
+        <h3>Business Information</h3>
+
+        <label>Company Name</label>
+        <input type="text" placeholder="Enter company name" required>
+
+        <label>SSM Registration Number</label>
+        <input type="text" placeholder="e.g. 202301234567" required>
+
+        <label>Upload SSM Certificate</label>
+        <input type="file" accept=".pdf,.jpg,.jpeg,.png" required>
+
+        <label>Business Type (Legal Structure)</label>
+        <select required>
+            <option value="">-- Select Business Type --</option>
+            <option>Sole Proprietorship</option>
+            <option>Partnership</option>
+            <option>Private Limited (Sdn Bhd)</option>
+            <option>Public Limited (Berhad)</option>
+            <option>Non-Profit Organisation</option>
+            <option>Others</option>
+        </select>
+
+        <label>Business Field / Industry</label>
+        <select required>
+            <option value="">-- Select Business Field --</option>
+            <option>Food & Beverage (F&B)</option>
+            <option>Retail</option>
+            <option>Wedding & Event</option>
+            <option>Technology / IT</option>
+            <option>Finance / Banking</option>
+            <option>Health & Wellness</option>
+            <option>Education</option>
+            <option>Others</option>
+        </select>
+
+        <label>Business Address</label>
+        <textarea placeholder="Enter company address"></textarea>
+
+        <label>Company Email</label>
+        <input type="email" placeholder="company@email.com" required>
+
+        <label>Business Contact Number</label>
+        <input type="tel" placeholder="e.g. +60123456789">
+
+        <h3>Business Owner Information</h3>
+
+        <label>Owner Full Name</label>
+        <input type="text" placeholder="Enter full name" required>
+
+        <label>Owner Email</label>
+        <input type="email" placeholder="owner@email.com" required>
+
+        <label>Owner Contact Number</label>
+        <input type="tel" placeholder="e.g. +60123456789">
+
+        <label>Position / Role</label>
+        <input type="text" placeholder="e.g. CEO, Director, Founder">
+
+<!-- PDPA Consent -->
+<label style="display: flex; align-items: flex-start; font-size: 14px; line-height: 1.4; color: #333; margin-top: 15px;">
+    <input type="checkbox" required style="margin-top: 2px;">
+    I consent to the collection and processing of my personal data in accordance with the Privacy Policy and agree to the Terms of Service.
+</label>
+
+        <button type="submit">Register Company</button>
+    </form>
+
+    <p class="note">
+        ⚠️ Please ensure all information is accurate. Incorrect details or missing SSM certificate may delay verification.
+    </p>
+</div>
+
+</body>
+</html>
