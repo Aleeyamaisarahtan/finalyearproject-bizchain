@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Profile | BizChain</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+    }
+
+    /*NavBar */
+    .navbar {
+        background-color: #007bff;
+        padding: 15px 25px;
+        display: flex;
+        align-items: center;
+        color: white;
+    }
+
+    .navbar img {
+        height: 45px;
+        margin-right: 15px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .navbar ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 25px;
+        justify-content: center;
+        flex: 2;
+    }
+
+    .navbar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    .navbar ul li a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+        .navbar {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .navbar ul {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+
+    /*Profile Content*/
+    .profile-wrapper {
+        display: flex;
+        justify-content: center;
+        padding: 50px 20px;
+    }
+
+    .profile-container {
+        background-color: #ffffff;
+        width: 400px;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .profile-container img.profile-pic {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        margin: 10px 0;
+        color: #007bff;
+        font-size: 22px;
+    }
+
+    p {
+        margin: 5px 0;
+        color: #555;
+        font-size: 15px;
+    }
+
+    .verified {
+        color: green;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .scam-flag {
+        color: red;
+        font-weight: bold;
+        margin: 10px 0;
+        font-size: 15px;
+    }
+
+    hr {
+        margin: 25px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    .comments-section {
+        text-align: left;
+    }
+
+    .comments-section h3 {
+        margin-bottom: 5px;
+        font-size: 18px;
+        color: #007bff;
+    }
+
+    .comment {
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    button {
+        margin-top: 10px;
+        width: 100%;
+        padding: 12px;
+        border-radius: 6px;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .submit-btn {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .submit-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .report-btn {
+        background-color: #dc3545;
+        color: white;
+        margin-top: 15px;
+    }
+
+    .report-btn:hover {
+        background-color: #b52a37;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Verify</a></li>
+        <li><a href="#">Report</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact Us</a></li>
+    </ul>
+    <img src="profile picture.png" alt="BizChain Logo">
+</div>
+
+<!-- PROFILE CONTENT -->
+<div class="profile-wrapper">
+    <div class="profile-container">
+
+        <img src="profile picture.png" alt="Company Logo" class="profile-pic">
+
+        <h2>ABC Enterprise Sdn Bhd</h2>
+        <p class="verified">✔ Verified Business (SSM Confirmed)</p>
+
+        <div class="scam-flag">⚠️ Reported by 5 users — under review</div>
+
+        <p><strong>Business Type:</strong> Private Limited (Sdn Bhd)</p>
+        <p><strong>Business Field:</strong> Food & Beverage (F&B)</p>
+        <p><strong>Email:</strong> info@abc.com</p>
+        <p><strong>Phone:</strong> +6012-3456789</p>
+        <p><strong>Address:</strong> 123 Jalan Example, Kuala Lumpur</p>
+
+        <hr>
+
+        <div class="comments-section">
+            <h3>Comments</h3>
+            <p style="font-size:12px; color:#777;">
+                Comments reflect individual user experiences and are not verified by the platform.
+            </p>
+
+            <div class="comment">Great service and quality products.</div>
+            <div class="comment">Fast delivery, but packaging could improve.</div>
+            <div class="comment">Friendly staff and excellent customer support.</div>
+        </div>
+
+        <hr>
+
+        <div class="comments-section">
+            <h3>Leave a Comment</h3>
+            <textarea placeholder="Write your comment here..." required></textarea>
+            <button class="submit-btn">Submit Comment</button>
+        </div>
+
+        <hr>
+
+        <button class="report-btn"
+        onclick="alert('Reports are confidential. False reporting may result in account suspension.')">
+            Report Business
+        </button>
+
+    </div>
+</div>
+
+</body>
+</html>
