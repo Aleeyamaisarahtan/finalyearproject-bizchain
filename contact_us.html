@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact Us | BizChain</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+    }
+
+    /* NAVBAR */
+    .navbar {
+        background-color: #007bff;
+        padding: 15px 25px;
+        display: flex;
+        align-items: center;
+        color: white;
+    }
+
+    .navbar img {
+        height: 45px;
+        margin-right: 15px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .navbar ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 25px;
+        justify-content: center;
+        flex: 2;
+    }
+
+    .navbar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    .navbar ul li a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+        .navbar {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .navbar ul {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+
+    /*CONTACT PAGE CONTENT*/
+    .contact-wrapper {
+        display: flex;
+        justify-content: center;
+        padding: 50px 20px;
+    }
+
+    .contact-container {
+        background-color: #ffffff;
+        max-width: 900px;
+        width: 100%;
+        padding: 45px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .contact-container h1 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .contact-container p {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .contact-info h3,
+    .contact-form h3 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .contact-info p {
+        text-align: left;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .contact-info strong {
+        color: #333;
+    }
+
+    .contact-form label {
+        display: block;
+        font-weight: bold;
+        margin-top: 15px;
+        margin-bottom: 6px;
+        font-size: 14px;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .contact-form textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .contact-form button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 14px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .contact-form button:hover {
+        background-color: #0056b3;
+    }
+
+    .note {
+        font-size: 13px;
+        color: #777;
+        margin-top: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Verify</a></li>
+        <li><a href="#">Report</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact Us</a></li>
+    </ul>
+    <img src="profile picture.png" alt="BizChain Logo">
+</div>
+
+<!-- CONTACT CONTENT -->
+<div class="contact-wrapper">
+    <div class="contact-container">
+
+        <h1>CONTACT US</h1>
+        <p>
+            If you have any questions, feedback, or require assistance regarding business verification,
+            reporting, or platform usage, please feel free to contact us using the information below.
+        </p>
+
+        <div class="contact-grid">
+
+            <!-- CONTACT INFO -->
+            <div class="contact-info">
+                <h3>Get In Touch</h3>
+                <p><strong>Email:</strong> support@bizchain.my</p>
+                <p><strong>Phone:</strong> +60 3-1234 5678</p>
+                <p><strong>WhatsApp (Business Support):</strong> +60 12-345 6789</p>
+                <p><strong>Office Hours:</strong> Monday – Friday, 8:00 AM – 5:00 PM</p>
+                <p><strong>Location:</strong> Pulau Pinang, Malaysia</p>
+
+                <p class="note">
+                    WhatsApp support is intended for general enquiries only. For sensitive or confidential
+                    matters, please contact us via email. BizChain does not provide dispute resolution services.
+                    All reports are reviewed strictly for verification and transparency purposes.
+                </p>
+            </div>
+
+            <!-- CONTACT FORM -->
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+
+                <form action="#" method="post">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Enter your full name" required>
+
+                    <label>Email Address</label>
+                    <input type="email" placeholder="Enter your email address" required>
+
+                    <label>Enquiry Type</label>
+                    <select required>
+                        <option value="">-- Select Enquiry Type --</option>
+                        <option>General Enquiry</option>
+                        <option>Business Verification</option>
+                        <option>Report a Scam</option>
+                        <option>Technical Support</option>
+                        <option>Other</option>
+                    </select>
+
+                    <label>Message</label>
+                    <textarea placeholder="Write your message here..." required></textarea>
+
+                    <button type="submit">Submit Message</button>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
