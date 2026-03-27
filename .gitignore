@@ -1,0 +1,22 @@
+# Visual Studio / build folders
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local database files
+*.mdf
+*.ldf
+
+# Docker / Gradle / build caches
+.gradle/
+build/
+
+# Azure / config files
+appsettings.Development.json
