@@ -1,0 +1,20 @@
+CREATE TABLE BusinessOwners (
+    BusinessOwnerID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT NOT NULL UNIQUE,                   
+    CompanyName NVARCHAR(100) NOT NULL,          
+    SSMRegistrationNumber NVARCHAR(50) NOT NULL UNIQUE,  
+    SSMCertificate VARBINARY(MAX) NULL,          
+    BusinessType NVARCHAR(50) NOT NULL,          
+    BusinessField NVARCHAR(100) NOT NULL,        
+    BusinessAddress NVARCHAR(255) NOT NULL,
+    CompanyEmail NVARCHAR(100) NOT NULL UNIQUE,
+    BusinessContactNumber NVARCHAR(20) NOT NULL,
+    BusinessFacebook NVARCHAR(100) NULL,
+    BusinessInstagram NVARCHAR(100) NULL,
+    BusinessTikTok NVARCHAR(100) NULL,
+    BusinessWebsite NVARCHAR(100) NULL,
+    Fingerprint VARBINARY(MAX) NULL,             
+    Status NVARCHAR(20) DEFAULT 'Pending',      
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
