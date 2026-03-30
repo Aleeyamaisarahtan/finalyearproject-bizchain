@@ -1,6 +1,6 @@
 <?php
 // --- Database connection ---
-$serverName = "localhost,1433"; // SQL Server and port
+$serverName = "localhost,1433";
 $connectionOptions = [
     "Database" => "BizChainDB",
     "Uid" => "SA",
@@ -8,7 +8,6 @@ $connectionOptions = [
     "Encrypt" => false
 ];
 
-// Connect to SQL Server
 $conn = sqlsrv_connect($serverName, $connectionOptions);
 
 if ($conn === false) {

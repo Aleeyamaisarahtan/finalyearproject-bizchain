@@ -1,124 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Bizchain Signup</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BizChain | Sign Up</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f1f1f1;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-        .signup-container {
-            background: white;
-            padding: 35px 50px;
-            border-radius: 10px;
-            width: 350px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            text-align: center;
-        }
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
 
-        input[type="text"], input[type="password"], input[type="email"], select {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0 15px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('background.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+}
 
-        input[type="submit"], input[type="button"] {
-            width: 100%;
-            padding: 12px;
-            margin-top: 5px;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+.wrapper{
+    width: 400px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,.2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 15px rgba(0,0,0,.2);
+    color: #fff;
+    border-radius: 20px;
+    padding: 25px 30px;
+}
 
-        input[type="submit"] { background: #007bff; }
-        input[type="submit"]:hover { background: #0056b3; }
-        input[type="button"] { background: #28a745; }
-        input[type="button"]:hover { background: #218838; }
+.wrapper h1{
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 10px;
+}
 
-        .message {
-            margin-top: 15px;
-            font-weight: bold;
-            color: green;
-        }
-        .message.error { color: red; }
-    </style>
+.input-box{
+    position: relative;
+    width: 100%;
+    height: 45px;
+    margin: 12px 0;
+}
+
+.input-box input,
+.input-box select{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,.3);
+    border-radius: 40px;
+    font-size: 13px;
+    color: #fff;
+    padding: 0 40px 0 15px;
+    outline: none;
+}
+
+.input-box input::placeholder{
+    color: #ddd;
+}
+
+.input-box select{
+    color: #ddd;
+    appearance: none;
+}
+
+.input-box i{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.pdpa{
+    font-size: 11px;
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+}
+
+.btn{
+    width: 100%;
+    height: 42px;
+    background: #fff;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 12px;
+}
+
+.login-link{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.login-link a{
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+</style>
 </head>
 
 <body>
-    <div class="signup-container">
-        <h2>Create Account</h2>
 
-        <!-- Display message if passed in query string -->
-        <?php if(isset($_GET['message'])): ?>
-            <div class="message <?php echo ($_GET['status']=='error')?'error':''; ?>">
-                <?php echo htmlspecialchars($_GET['message']); ?>
-            </div>
-        <?php endif; ?>
+<div class="wrapper">
+<form method="POST" action="signup.php">
 
-        <form method="POST" action="signup.php">
-            <label for="fullname">Full Name</label>
-            <input type="text" name="fullname" placeholder="Enter Full Name" required>
+<h1>SIGN UP</h1>
 
-            <label for="ic">IC Number</label>
-            <input type="text" name="ic" placeholder="Enter IC Number" required>
+<div class="input-box">
+    <input type="text" name="fullname" placeholder="Full Name" required>
+    <i class="bi bi-person"></i>
+</div>
 
-            <label for="gender">Gender</label>
-            <select name="gender" required>
-                <option value="">-- Select Gender --</option>
-                <option>Male</option>
-                <option>Female</option>
-                <option>Rather Not To Say</option>
-            </select>
+<div class="input-box">
+    <input type="text" name="ic" placeholder="IC Number" required>
+    <i class="bi bi-credit-card"></i>
+</div>
 
-            <label for="username">Username</label>
-            <input type="text" name="username" placeholder="Enter Username" required>
+<div class="input-box">
+    <select name="gender" required>
+        <option value="">Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Rather Not To Say</option>
+    </select>
+    <i class="bi bi-person-lines-fill"></i>
+</div>
 
-            <label for="phonenum">Phone Number</label>
-            <input type="text" name="phonenum" placeholder="Enter Phone Number" required>
+<div class="input-box">
+    <input type="text" name="username" placeholder="Username" required>
+    <i class="bi bi-person-circle"></i>
+</div>
 
-            <label for="email">Email Address</label>
-            <input type="email" name="email" placeholder="Enter Email Address" required>
+<div class="input-box">
+    <input type="text" name="phonenum" placeholder="Phone Number" required>
+    <i class="bi bi-telephone"></i>
+</div>
 
-            <label for="password">Password</label>
-            <input type="password" name="password" placeholder="Enter Password" required>
+<div class="input-box">
+    <input type="email" name="email" placeholder="Email Address" required>
+    <i class="bi bi-envelope"></i>
+</div>
 
-            <label for="confirmpassword">Confirm Password</label>
-            <input type="password" name="confirmpassword" placeholder="Re-Enter Password" required>
+<div class="input-box">
+    <input type="password" name="password" placeholder="Password" required>
+    <i class="bi bi-lock"></i>
+</div>
 
-            <!-- PDPA Consent -->
-            <div style="display: flex; align-items: center; margin-top: 15px; margin-bottom: 15px;">
-                <input type="checkbox" name="pdpa" required style="margin-right: 10px;">
-                <span style="font-size: 14px; color: #333; text-align: justify;">
-                    I consent to the collection and processing of my personal data in accordance with the Privacy Policy and agree to the Terms of Service.
-                </span>
-            </div>
+<div class="input-box">
+    <input type="password" name="confirmpassword" placeholder="Confirm Password" required>
+    <i class="bi bi-shield-lock"></i>
+</div>
 
-            <input type="submit" value="Sign Up">
-            <input type="button" value="Register As Business Owner">
-        </form>
-    </div>
-     <script>
-        // Check URL for message
-        const urlParams = new URLSearchParams(window.location.search);
-        const message = urlParams.get('message');
-        const status = urlParams.get('status');
+<div class="pdpa">
+    <input type="checkbox" name="pdpa" required>
+    <span>I consent to the collection and processing of my personal data in accordance with the Privacy Policy and agree to the Terms of Service.</span>
+</div>
 
-        if(message) {
-            alert(message); // show alert message
-        }
-    </script>
+<button type="submit" class="btn">Sign Up</button>
+
+<div class="login-link">
+    <p>Already have an account? <a href="login.html">Login</a></p>
+</div>
+
+</form>
+</div>
+
 </body>
 </html>
