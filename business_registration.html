@@ -58,7 +58,6 @@ input[type="file"] {
     padding: 6px;
 }
 
-/* Submit button */
 button {
     width: 100%;
     padding: 14px;
@@ -71,7 +70,6 @@ button {
     margin-top: 15px;
 }
 
-/*Checkbox for consent*/
 input[type="checkbox"] {
     width: auto;
     margin-right: 10px;
@@ -100,32 +98,35 @@ button:hover {
 <div class="register-container">
     <h2>Register Business Company</h2>
 
-    <form action="#" method="post" enctype="multipart/form-data">
+    <form action="business_registration.php" method="post" enctype="multipart/form-data">
 
         <h3>Business Information</h3>
 
         <label>Company Name</label>
-        <input type="text" placeholder="Enter company name" required>
+        <input type="text" name="company_name" required>
 
         <label>SSM Registration Number</label>
-        <input type="text" placeholder="e.g. 202301234567" required>
+        <input type="text" name="ssm_reg_no" required>
 
         <label>Upload SSM Certificate</label>
-        <input type="file" accept=".pdf,.jpg,.jpeg,.png" required>
+        <input type="file" name="ssm_certificate" accept=".pdf,.jpg,.jpeg,.png" required>
 
         <label>Business Type (Legal Structure)</label>
-        <select required>
+        <select id="businessType" name="business_type" onchange="toggleOther('businessType','otherBusinessType')" required>
             <option value="">-- Select Business Type --</option>
             <option>Sole Proprietorship</option>
             <option>Partnership</option>
             <option>Private Limited (Sdn Bhd)</option>
             <option>Public Limited (Berhad)</option>
             <option>Non-Profit Organisation</option>
-            <option>Others</option>
+            <option value="Others">Others</option>
         </select>
 
+        <input type="text" id="otherBusinessType" name="other_business_type"
+               placeholder="Please specify" style="display:none; margin-top:10px;">
+
         <label>Business Field / Industry</label>
-        <select required>
+        <select id="businessField" name="business_field" onchange="toggleOther('businessField','otherBusinessField')" required>
             <option value="">-- Select Business Field --</option>
             <option>Food & Beverage (F&B)</option>
             <option>Retail</option>
@@ -134,37 +135,37 @@ button:hover {
             <option>Finance / Banking</option>
             <option>Health & Wellness</option>
             <option>Education</option>
-            <option>Others</option>
+            <option value="Others">Others</option>
         </select>
 
+        <input type="text" id="otherBusinessField" name="other_business_field"
+               placeholder="Please specify" style="display:none; margin-top:10px;">
+
         <label>Business Address</label>
-        <textarea placeholder="Enter company address"></textarea>
+        <textarea name="business_address" required></textarea>
 
         <label>Company Email</label>
-        <input type="email" placeholder="company@email.com" required>
+        <input type="email" name="company_email" required>
 
         <label>Business Contact Number</label>
-        <input type="tel" placeholder="e.g. +60123456789">
+        <input type="tel" name="business_contact_number" required>
 
-        <h3>Business Owner Information</h3>
+        <label>Facebook (Optional)</label>
+        <input type="text" name="facebook">
 
-        <label>Owner Full Name</label>
-        <input type="text" placeholder="Enter full name" required>
+        <label>Instagram (Optional)</label>
+        <input type="text" name="instagram">
 
-        <label>Owner Email</label>
-        <input type="email" placeholder="owner@email.com" required>
+        <label>TikTok (Optional)</label>
+        <input type="text" name="tiktok">
 
-        <label>Owner Contact Number</label>
-        <input type="tel" placeholder="e.g. +60123456789">
+        <label>Website (Optional)</label>
+        <input type="text" name="website">
 
-        <label>Position / Role</label>
-        <input type="text" placeholder="e.g. CEO, Director, Founder">
-
-<!-- PDPA Consent -->
-<label style="display: flex; align-items: flex-start; font-size: 14px; line-height: 1.4; color: #333; margin-top: 15px;">
-    <input type="checkbox" required style="margin-top: 2px;">
-    I consent to the collection and processing of my personal data in accordance with the Privacy Policy and agree to the Terms of Service.
-</label>
+        <label style="display: flex; align-items: flex-start; font-size: 14px; line-height: 1.4; color: #333; margin-top: 15px;">
+            <input type="checkbox" required style="margin-top: 2px;">
+             I consent to the collection and processing of my personal data in accordance with the Privacy Policy and agree to the Terms of Service.
+        </label>
 
         <button type="submit">Register Company</button>
     </form>
@@ -173,6 +174,35 @@ button:hover {
         ⚠️ Please ensure all information is accurate. Incorrect details or missing SSM certificate may delay verification.
     </p>
 </div>
+
+<script>
+function toggleOther(selectId, inputId) {
+    const select = document.getElementById(selectId);
+    const input = document.getElementById(inputId);
+
+    if (select.value === "Others") {
+        input.style.display = "block";
+    } else {
+        input.style.display = "none";
+        input.value = "";
+    }
+}
+
+// Capitalize first letter of each word for "Others"
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
+document.getElementById("otherBusinessType").addEventListener("input", function() {
+    this.value = toTitleCase(this.value);
+});
+
+document.getElementById("otherBusinessField").addEventListener("input", function() {
+    this.value = toTitleCase(this.value);
+});
+</script>
 
 </body>
 </html>
