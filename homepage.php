@@ -1,103 +1,93 @@
 <?php
-session_start();
-
-$userID = isset($_SESSION['UserID']) ? $_SESSION['UserID'] : null;
+session_start(); 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>BizChain Menu</title>
-
+<title>Homepage</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-    .navbar {
-        background-color: #007bff;
-        padding: 15px 25px;
-        display: flex;
-        align-items: center;
-        color: white;
-    }
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+}
 
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;      
+}
 
-    .navbar img {
-        height: 45px;
-        margin-right: 15px;
-         border-radius: 50%;
-        object-fit: cover;
-    }
+body {
+    display: flex;
+    min-height: 100vh;
+    color: white;
+}
 
-    .navbar ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        gap: 25px;
-        justify-content: center;
-        flex: 2;
-    }
+.overlay-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    pointer-events: none;
+}
 
-    .navbar ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        transition: 0.3s;
-    }
+.overlay-content h1 {
+    font-size: 60px;
+    color: white;
+    text-shadow:
+        2px 2px 0 #000,
+        -2px 2px 0 #000,
+        2px -2px 0 #000,
+        -2px -2px 0 #000,
+        2px 0 0 #000,
+        -2px 0 0 #000,
+        0 2px 0 #000,
+        0 -2px 0 #000; 
+}
 
-    .navbar ul li a:hover {
-        text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-        .navbar {
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .navbar h2 {
-            flex: unset;
-            margin-bottom: 10px;
-        }
-
-        .navbar ul {
-            flex-direction: column;
-            gap: 10px;
-        }
-    }
+.overlay-content p {
+    font-size: 23px;
+    padding-top: 10px;
+    color: white;
+    text-shadow:
+        1px 1px 0 #000,
+        -1px 1px 0 #000,
+        1px -1px 0 #000,
+        -1px -1px 0 #000,
+        1px 0 0 #000,
+        -1px 0 0 #000,
+        0 1px 0 #000,
+        0 -1px 0 #000;
+}
 </style>
 </head>
-
 <body>
 
-<!-- NAVIGATION BAR -->
-<div class="navbar">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Verify</a></li>
-        <li><a href="#">Report</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href=business_registration.html>Register</a></li>
-        <li><a href="#">Contact Us</a></li>
-    </ul>
-    <img src="profile picture.png" alt="BizChain Logo"> 
-</div>
+<!-- Video Background -->
+<video id="bg-video" autoplay muted loop>
+    <source src="VideoBackground.mp4" type="video/mp4">
+   
+</video>
 
+<!-- Sidebar -->
+<?php include 'Sidebar.php'; ?>
 
-<div style="padding: 40px;">
-    <h1>Welcome to BizChain</h1>
-    <p>Your trusted platform for verifying businesses.</p>
-
-    <?php if ($userID): ?>
-        <p><strong>User ID:</strong> <?php echo htmlspecialchars($userID); ?></p>
-    <?php else: ?>
-        <p>You are not logged in.</p>
-    <?php endif; ?>
+<!-- Main Content -->
+<div class="overlay-content">
+    <h1>WELCOME TO BIZCHAIN</h1>
+    <strong><p>STAY ALERT. BEWARE OF SCAMMERS AND VERIFY BUSINESES HERE.</p></strong>
 </div>
 
 </body>
