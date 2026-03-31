@@ -24,7 +24,7 @@ $searchNoSpace = str_replace(' ', '', $search);
 
 $tsql = "
     SELECT BusinessOwnerID, CompanyName, BusinessField, BusinessType,
-           SSMRegistrationNumber, BusinessContactNumber,  CompanyEmail,
+           SSMRegistrationNumber, BusinessContactNumber, BusinessAddress, CompanyEmail,
            BusinessFacebook, BusinessInstagram, BusinessTiktok, BusinessWebsite, StoreType
     FROM BusinessOwners
     WHERE REPLACE(CompanyName, ' ', '') LIKE ?
@@ -83,7 +83,7 @@ body, html {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
-    max-width: 800px;
+    max-width: 900px;
     z-index: 2;
 }
 
@@ -127,7 +127,7 @@ input[type="text"]::placeholder {
 }
 
 button {
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 12px;
     background-color: rgba(255, 182, 193, 0.8);
     color: black;
@@ -145,7 +145,7 @@ button:hover {
 
 .results {
     margin-top: 20px;
-    text-align: center;
+    text-align: left;
     color: black;
 }
 
@@ -156,6 +156,7 @@ button:hover {
 }
 
 .results th, .results td {
+    text-align: center;
     padding: 15px;
     border: 1px solid rgba(255,255,255,0.3);
     white-space: nowrap;
@@ -193,6 +194,7 @@ button:hover {
                     <th>COMPANY NAME</th>
                     <th>BUSINESS FIELD</th>
                     <th>STORE TYPE</th>
+                    <th>ADDRESS</th>
                     <th>MORE DETAILS</th>
                 </tr>
                 <?php foreach ($results as $row): ?>
@@ -200,13 +202,21 @@ button:hover {
                     <td><?= htmlspecialchars($row['CompanyName']); ?></td>
                     <td><?= htmlspecialchars($row['BusinessField']); ?></td>
                     <td><?= htmlspecialchars($row['StoreType']); ?></td>
+                    <td><?php 
+                        if ($row['StoreType'] === 'Both' || $row['StoreType'] === 'Physical') {
+                            echo htmlspecialchars($row['BusinessAddress']);
+                        } else {
+                            echo '-';
+                        }
+                    ?>
+                    </td>
                     <td><a href="business_profile.php?id=<?= urlencode($row['BusinessOwnerID']); ?>">View Details</a></td>
                 </tr>
                 <?php endforeach; ?>
             </table>
         </div>
                 <?php elseif(isset($_GET['q'])): ?>
-                    <p style="margin-top:15px;color:red;">No business found for "<?= htmlspecialchars($search); ?>"</p>
+                    <p style="margin-top:15px;color:red;">No Business Found For "<?= htmlspecialchars($search); ?>"</p>
                 <?php endif; ?>
     </div>
 </div>
