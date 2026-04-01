@@ -156,10 +156,12 @@ button:hover {
 }
 
 .results th, .results td {
-    text-align: center;
+text-align: center;
     padding: 15px;
     border: 1px solid rgba(255,255,255,0.3);
-    white-space: nowrap;
+    white-space: normal;   /* allow wrapping */
+    word-break: break-word; /* break long words if needed */
+    max-width: 200px; 
 }
 
 .results th {
