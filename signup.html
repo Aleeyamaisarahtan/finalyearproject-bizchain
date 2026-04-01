@@ -21,7 +21,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('background.jpg') no-repeat;
+    background: url('background.jpeg') no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -64,11 +64,11 @@ body{
 }
 
 .input-box input::placeholder{
-    color: #ddd;
+    color: black;
 }
 
 .input-box select{
-    color: #ddd;
+    color: black;
     appearance: none;
 }
 
@@ -109,13 +109,40 @@ body{
     font-weight: 600;
     text-decoration: none;
 }
+.custom-file {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(255,255,255,.3);
+    border-radius: 40px;
+    padding: 0 40px 0 15px; /* same as text input padding */
+    background: transparent;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+}
+
+.custom-file input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* hide native input */
+    cursor: pointer;
+}
+
+.custom-file .file-text {
+    pointer-events: none; /* allow clicking the hidden input */
+    color: #ddd;
+    font-size: 13px;
+}
 </style>
 </head>
 
 <body>
 
 <div class="wrapper">
-<form method="POST" action="signup.php">
+<form method="POST" action="signup.php" enctype="multipart/form-data">
 
 <h1>SIGN UP</h1>
 
@@ -162,6 +189,14 @@ body{
 <div class="input-box">
     <input type="password" name="confirmpassword" placeholder="Confirm Password" required>
     <i class="bi bi-shield-lock"></i>
+</div>
+
+<div class="input-box">
+    <label class="custom-file">
+        <input type="file" name="profile_picture" accept="image/*">
+        <span class="file-text">Choose Profile Picture</span>
+    </label>
+    <i class="bi bi-image"></i>
 </div>
 
 <div class="pdpa">

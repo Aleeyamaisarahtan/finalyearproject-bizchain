@@ -34,11 +34,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Hash password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
- 
-    $tsql = "INSERT INTO Users ([FullName], [ICNumber], [Gender], [Username], [PhoneNumber], [EmailAddress], [PasswordHash], [CreatedAt]) 
-         VALUES (?, ?, ?, ?, ?, ?, ?,DATEADD(HOUR, 8, GETDATE()))";
+    // --- HANDLE PROFILE PICTURE ---
+$uploadDir = 'profile_picture/';
 
-    $params = [$fullname, $ic, $gender, $username, $phonenum, $email, $hashedPassword];
+if (!is_dir($uploadDir)) {
+    mkdir($uploadDir, 0755, true);
+}
+
+$profilePicturePath = 'profile picture.png'; // default image
+
+if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === 0) {
+
+    $fileTmpPath = $_FILES['profile_picture']['tmp_name'];
+    $fileName = $_FILES['profile_picture']['name'];
+    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+    $allowedExt = ['jpg', 'jpeg', 'png'];
+
+    if (in_array($fileExt, $allowedExt)) {
+
+        $newFileName = 'user_' . uniqid() . '.' . $fileExt;
+        $destination = $uploadDir . $newFileName;
+
+        if (move_uploaded_file($fileTmpPath, $destination)) {
+            $profilePicturePath = $destination;
+        }
+    }
+}
+
+ 
+    $tsql = "INSERT INTO Users 
+([FullName], [ICNumber], [Gender], [Username], [PhoneNumber], [EmailAddress], [PasswordHash], [ProfilePicture], [CreatedAt]) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, DATEADD(HOUR, 8, GETDATE()))";
+
+    $params = [$fullname, $ic, $gender, $username, $phonenum, $email, $hashedPassword, $profilePicturePath];
 
     $stmt = sqlsrv_query($conn, $tsql, $params);
 
