@@ -5,7 +5,7 @@ session_start();
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Homepage</title>
+<title>BizChain | Homepage</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
