@@ -14,17 +14,24 @@ if ($conn === false) {
     die(print_r(sqlsrv_errors(), true));
 }
 
+// FUNCTION TO LOG EVENTS
+function logEvent($conn, $eventType, $userType, $userIdentifier, $businessID) {
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $tsql = "INSERT INTO AuditLogs (EventType, UserType, UserIdentifier, BusinessOwnerID, IPAddress, CreatedAt)
+             VALUES (?, ?, ?, ?, ?, DATEADD(HOUR, 8, GETDATE()))";
+    $params = [$eventType, $userType, $userIdentifier, $businessID, $ip];
+    sqlsrv_query($conn, $tsql, $params);
+}
+
 // GET IDs
 $businessID = isset($_GET['businessID']) ? intval($_GET['businessID']) : null;
 $userID = $_SESSION['UserID'] ?? null;
 
 // FETCH COMPANY NAME
 $companyName = "";
-
 if ($businessID) {
     $sql = "SELECT CompanyName FROM BusinessOwners WHERE BusinessOwnerID = ?";
     $stmt = sqlsrv_query($conn, $sql, [$businessID]);
-
     if ($stmt && $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
         $companyName = $row['CompanyName'];
     }
@@ -82,14 +89,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = sqlsrv_query($conn, $sql, $params);
         if ($stmt === false) die(print_r(sqlsrv_errors(), true));
 
-        echo "<script>alert('Report submitted successfully');</script>";
+        // LOG EVENT
+        logEvent($conn, "SubmitReport", "User", $userID, $businessID);
 
+        echo "<script>alert('Report submitted successfully');</script>";
         header("Location: business_profile.php?id=" . $businessID);
         exit();
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

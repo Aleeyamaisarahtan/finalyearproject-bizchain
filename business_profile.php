@@ -328,12 +328,12 @@ button {
                     <p class="verified">✔ Verified Business</p>
                 <?php endif; ?>
 
-                <?php if ($pendingReportsCount > 0): ?>
-                    <div class="scam-flag">⚠️ Reported by <?= $pendingReportsCount ?> User<?= $pendingReportsCount > 1 ? 's' : '' ?> — Under Review</div>
-                <?php elseif ($approvedReportsCount > 0): ?>
+                    <?php if ($approvedReportsCount > 0): ?>
                     <div class="scam-flag">⚠️ Reported by <?= $approvedReportsCount ?> User<?= $approvedReportsCount > 1 ? 's' : '' ?></div>
+            <?php elseif ($pendingReportsCount > 0): ?>
+                    <div class="scam-flag">⚠️ Reported by <?= $pendingReportsCount ?> User<?= $pendingReportsCount > 1 ? 's' : '' ?> — Under Review</div>
                 <?php endif; ?> </div>
-
+ 
             <div class="section">
                 <p><strong>Business Type:</strong> <?= htmlspecialchars($business['BusinessType']); ?></p>
                 <p><strong>Business Field:</strong> <?= htmlspecialchars($business['BusinessField']); ?></p>

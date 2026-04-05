@@ -9,14 +9,6 @@ if (isset($_POST['logout'])) {
     exit;
 }
 
-// --- Direct logout handling ---
-if (isset($_POST['logout'])) {
-    session_unset();
-    session_destroy();
-    header("Location: login.html");
-    exit;
-}
-
 // --- Database connection ---
 $serverName = "localhost,1433";
 $connectionOptions = [
@@ -25,7 +17,6 @@ $connectionOptions = [
     "PWD" => "Bizchain123!",
     "Encrypt" => false
 ];
-
 $conn = sqlsrv_connect($serverName, $connectionOptions);
 if ($conn === false) die(print_r(sqlsrv_errors(), true));
 
@@ -39,13 +30,12 @@ if (isset($_POST['upload_fp']) && isset($_FILES['fingerprint'])) {
             $newName = uniqid("fp_", true) . "." . $ext;
             $uploadPath = "fingerprint/" . $newName;
             move_uploaded_file($_FILES['fingerprint']['tmp_name'], $uploadPath);
-
             $sql = "UPDATE BusinessOwners SET Fingerprint=? WHERE BusinessOwnerID=?";
             sqlsrv_query($conn, $sql, [$newName, $businessId]);
-            header("Location: ".$_SERVER['PHP_SELF']);
-            exit;
         }
     }
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit;
 }
 
 // --- Approve/Reject business ---
@@ -70,7 +60,6 @@ if (isset($_POST['approve_report'])) {
     header("Location: ".$_SERVER['PHP_SELF']);
     exit;
 }
-
 if (isset($_POST['delete_report'])) {
     $sql = "DELETE FROM ScamReports WHERE ReportID=?";
     sqlsrv_query($conn, $sql, [$_POST['delete_report']]);
@@ -88,14 +77,14 @@ if (isset($_POST['delete_contact'])) {
 
 /* ===================== FETCH DATA ===================== */
 
-// --- Business Owners ---
+// Business Owners
 $businessSql = "SELECT b.*, u.FullName AS OwnerName 
                 FROM BusinessOwners b
                 LEFT JOIN Users u ON b.UserID = u.UserID
                 ORDER BY b.BusinessOwnerID DESC";
 $businessStmt = sqlsrv_query($conn, $businessSql);
 
-// --- Scam Reports ---
+// Scam Reports
 $reportSql = "SELECT r.*, u.FullName AS ReporterName, b.CompanyName
               FROM ScamReports r
               LEFT JOIN Users u ON r.UserID = u.UserID
@@ -103,24 +92,36 @@ $reportSql = "SELECT r.*, u.FullName AS ReporterName, b.CompanyName
               ORDER BY r.ReportID DESC";
 $reportStmt = sqlsrv_query($conn, $reportSql);
 
-// --- Contact Us ---
+// Contact Messages
 $contactSql = "SELECT * FROM ContactUs ORDER BY ContactUsID DESC";
 $contactStmt = sqlsrv_query($conn, $contactSql);
 
+// Audit Logs
+$auditSql = "SELECT * FROM AuditLogs ORDER BY CreatedAt DESC";
+$auditStmt = sqlsrv_query($conn, $auditSql);
 ?>
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Admin Dashboard</title>
 <style>
-body { font-family: Arial; background:#f4f6f8; margin:20px; }
-h1 { color:#333; }
-h2 { margin-top:40px; color:#007bff; }
+body { font-family: Arial; margin:0; background:#f4f6f8; }
+h1 { color:#333; margin:0; padding:20px; }
+nav { background:#007bff; padding:10px 20px; color:white; display:flex; align-items:center; justify-content:space-between; }
+nav .nav-links { display:flex; gap:15px; }
+nav .nav-links a { color:white; text-decoration:none; font-weight:bold; }
+nav .nav-links a.active { text-decoration:underline; }
+nav form button { background:#f44336; border:none; padding:6px 12px; color:white; border-radius:4px; cursor:pointer; }
 
-table { width:100%; border-collapse:collapse; margin-top:10px; }
-th, td { border:1px solid #ccc; padding:8px; font-size:13px; text-align:center; }
+/* Container sections */
+.section { display:none; padding:20px; }
+.section.active { display:block; }
+
+/* Tables */
+table { width:100%; border-collapse:collapse; margin-top:10px; font-size:13px; }
+th, td { border:1px solid #ccc; padding:8px; text-align:center; }
 th { background:#007bff; color:white; }
-
 button { padding:5px 10px; border:none; border-radius:4px; cursor:pointer; }
 .approve { background:#4CAF50; color:white; }
 .reject { background:#f44336; color:white; }
@@ -136,23 +137,40 @@ button { padding:5px 10px; border:none; border-radius:4px; cursor:pointer; }
 .fp-upload-btn { background:#28a745; color:white; border:none; padding:4px 8px; border-radius:5px; cursor:pointer; font-size:12px; }
 .fp-upload-btn:hover { background:#218838; }
 </style>
+<script>
+function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav .nav-links a').forEach(a => a.classList.remove('active'));
+    document.querySelector('nav .nav-links a[href="#'+id+'"]').classList.add('active');
+}
+</script>
 </head>
 <body>
-<div style="text-align:right; margin-bottom:10px;">
-    <form method="POST" style="display:inline;">
-        <button type="submit" name="logout" style="padding:6px 12px; background:#f44336; color:white; border:none; border-radius:4px; cursor:pointer;">Logout</button>
-    </form>
-</div>
-<h1>Admin Dashboard</h1>
 
-<!-- ===================== Business Registrations ===================== -->
+<nav>
+    <div><strong>Admin Dashboard</strong></div>
+    <div class="nav-links">
+        <a href="#business" onclick="showSection('business')" class="active">Business Registrations</a>
+        <a href="#reports" onclick="showSection('reports')">Scam Reports</a>
+        <a href="#contacts" onclick="showSection('contacts')">Contact Messages</a>
+        <a href="#audit" onclick="showSection('audit')">Audit Logs</a>
+    </div>
+    <form method="POST">
+        <button type="submit" name="logout">Logout</button>
+    </form>
+</nav>
+
+<h1>Welcome, Admin</h1>
+
+<!-- Business Registrations -->
+<div class="section active" id="business">
 <h2>Business Registrations</h2>
 <table>
 <tr>
-<th>ID</th><th>Owner Name</th><th>Company Name</th><th>SSM Reg No</th>
-<th>SSM Certificate</th><th>Business Type</th><th>Business Field</th><th>Store Type</th>
-<th>Address</th><th>Email</th><th>Contact No</th><th>Facebook</th>
-<th>Instagram</th><th>TikTok</th><th>Website</th><th>Fingerprint</th>
+<th>ID</th><th>Owner Name</th><th>Company Name</th><th>SSM Reg No</th><th>SSM Certificate</th>
+<th>Business Type</th><th>Business Field</th><th>Store Type</th><th>Address</th><th>Email</th>
+<th>Contact No</th><th>Facebook</th><th>Instagram</th><th>TikTok</th><th>Website</th><th>Fingerprint</th>
 <th>Status</th><th>Created At</th><th>Action</th>
 </tr>
 <?php while($b = sqlsrv_fetch_array($businessStmt, SQLSRV_FETCH_ASSOC)) { ?>
@@ -198,62 +216,44 @@ button { padding:5px 10px; border:none; border-radius:4px; cursor:pointer; }
 </tr>
 <?php } ?>
 </table>
+</div>
 
-<!-- ===================== Scam Reports ===================== -->
+<!-- Scam Reports -->
+<div class="section" id="reports">
 <h2>Scam Reports</h2>
 <table>
 <tr>
-<?php
-$firstReport = sqlsrv_fetch_array($reportStmt, SQLSRV_FETCH_ASSOC);
-if ($firstReport) {
-    // Table headers
-    foreach(array_keys($firstReport) as $col) echo "<th>".htmlspecialchars($col)."</th>";
-    echo "<th>Owner Response</th><th>Action</th></tr>";
-
-    do {
-        echo "<tr>";
-        foreach ($firstReport as $key => $value) {
-            if ($value instanceof DateTime) $value = $value->format('Y-m-d H:i');
-
-            // Show names instead of IDs
-            if ($key === 'UserID') $value = $firstReport['ReporterName'] ?? '-';
-            if ($key === 'BusinessOwnerID') $value = $firstReport['CompanyName'] ?? '-';
-
-            // Make Evidence a clickable link
-            if ($key === 'Evidence' && !empty($value)) {
-                echo "<td><a href='".htmlspecialchars($value)."' target='_blank'>View</a></td>";
-            } else {
-                echo "<td>".htmlspecialchars($value ?? '-')."</td>";
-            }
-        }
-
-        // Show Owner Response
-        $ownerResponse = !empty($firstReport['OwnerResponse']) ? $firstReport['OwnerResponse'] : '-';
-        echo "<td>".htmlspecialchars($ownerResponse)."</td>";
-
-        // Action buttons
-        echo "<td>
-            <form method='POST' style='display:flex; gap:5px;'>
-                <button type='submit' name='approve_report' value='".$firstReport['ReportID']."' class='approve'>Approve</button>
-                <button type='submit' name='delete_report' value='".$firstReport['ReportID']."' class='delete'>Delete</button>
-            </form>
-        </td>";
-
-        echo "</tr>";
-    } while($firstReport = sqlsrv_fetch_array($reportStmt, SQLSRV_FETCH_ASSOC));
-} else {
-    echo "<tr><td colspan='100%'>No reports found.</td></tr>";
-}
-?>
+<th>ReportID</th><th>Reporter</th><th>Company</th><th>Platform</th><th>Scam Date</th><th>Scam Type</th><th>Description</th><th>Amount Lost</th><th>Evidence</th><th>Status</th><th>Owner Response</th><th>Action</th>
+</tr>
+<?php while($r = sqlsrv_fetch_array($reportStmt, SQLSRV_FETCH_ASSOC)) { ?>
+<tr>
+<td><?= $r['ReportID'] ?></td>
+<td><?= htmlspecialchars($r['ReporterName'] ?? '-') ?></td>
+<td><?= htmlspecialchars($r['CompanyName'] ?? '-') ?></td>
+<td><?= htmlspecialchars($r['Platform']) ?></td>
+<td><?= $r['ScamDate'] ? $r['ScamDate']->format('Y-m-d') : '-' ?></td>
+<td><?= htmlspecialchars($r['ScamType']) ?></td>
+<td><?= htmlspecialchars($r['ScamDescription']) ?></td>
+<td><?= htmlspecialchars($r['AmountLost']) ?></td>
+<td><?php if(!empty($r['Evidence'])): ?><a href="<?= $r['Evidence'] ?>" target="_blank">View</a><?php else: ?>-<?php endif; ?></td>
+<td><?= htmlspecialchars($r['Status'] ?? '-') ?></td>
+<td><?= htmlspecialchars($r['OwnerResponse'] ?? '-') ?></td>
+<td>
+<form method="POST" style="display:flex; gap:5px;">
+<button type="submit" name="approve_report" value="<?= $r['ReportID'] ?>" class="approve">Approve</button>
+<button type="submit" name="delete_report" value="<?= $r['ReportID'] ?>" class="delete">Delete</button>
+</form>
+</td>
+</tr>
+<?php } ?>
 </table>
-</table>
+</div>
 
-<!-- ===================== Contact Messages ===================== -->
+<!-- Contact Messages -->
+<div class="section" id="contacts">
 <h2>Contact Messages</h2>
 <table>
-<tr>
-<th>ID</th><th>Name</th><th>Email</th><th>Message</th><th>Action</th>
-</tr>
+<tr><th>ID</th><th>Name</th><th>Email</th><th>Message</th><th>Action</th></tr>
 <?php while($c = sqlsrv_fetch_array($contactStmt, SQLSRV_FETCH_ASSOC)) { ?>
 <tr>
 <td><?= $c['ContactUsID'] ?></td>
@@ -264,6 +264,40 @@ if ($firstReport) {
 </tr>
 <?php } ?>
 </table>
+</div>
+
+<!-- Audit Logs -->
+<div class="section" id="audit">
+<h2>Audit Logs</h2>
+<table>
+<tr>
+<th>Event Type</th><th>User Type</th><th>User Identifier</th><th>Status</th><th>Event Time</th></tr>
+<?php
+$auditSql = "SELECT * FROM AuditLogs ORDER BY EventTime DESC";
+$auditStmt = sqlsrv_query($conn, $auditSql);
+if ($auditStmt === false) {
+    die("Error fetching audit logs: " . print_r(sqlsrv_errors(), true));
+}
+
+while($a = sqlsrv_fetch_array($auditStmt, SQLSRV_FETCH_ASSOC)) { ?>
+<tr>
+<td><?= htmlspecialchars($a['EventType']) ?></td>
+<td><?= htmlspecialchars($a['UserType']) ?></td>
+<td><?= htmlspecialchars($a['UserIdentifier']) ?></td>
+<td><?= htmlspecialchars($a['Status']) ?></td>
+<td>
+<?php 
+if ($a['EventTime'] instanceof DateTime) {
+    echo $a['EventTime']->format('Y-m-d H:i');
+} else {
+    echo htmlspecialchars($a['EventTime'] ?? '-');
+}
+?>
+</td>
+</tr>
+<?php } ?>
+</table>
+</div>
 
 </body>
 </html>
